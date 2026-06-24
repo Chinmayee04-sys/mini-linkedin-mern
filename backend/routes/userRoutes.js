@@ -1,0 +1,15 @@
+const express=require("express")
+const protect=require("../middleware/authMiddleware")
+const router=express.Router()
+const {getUsers,registerUser,loginUser,getProfile,updateProfile,followUser,searchUsers,forgotPassword,resetPassword,getUserById}=require("../controllers/userController")
+router.get("/",getUsers)
+router.get("/search",protect,searchUsers)
+router.post("/register",registerUser)
+router.post("/login",loginUser);
+router.get("/profile",protect,getProfile)
+router.put("/profile",protect,updateProfile)
+router.post("/forgot-password",forgotPassword)
+router.put("/reset-password/:token",resetPassword)
+router.put("/follow/:id",protect,followUser)
+router.get("/:id",getUserById)
+module.exports=router;
