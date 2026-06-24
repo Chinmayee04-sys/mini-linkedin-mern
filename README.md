@@ -1,4 +1,4 @@
-# Mini LinkedIn Clone
+# Mini LinkedIn 
 
 A full-stack professional networking platform inspired by LinkedIn, built using the MERN Stack. The application allows users to create profiles, share posts, interact through likes and comments, upload images, and view a personalized social feed.
 
