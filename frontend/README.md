@@ -1,16 +1,146 @@
-# React + Vite
+# Mini LinkedIn Clone
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack professional networking platform inspired by LinkedIn, built using the MERN Stack. The application allows users to create profiles, share posts, interact through likes and comments, upload images, and view a personalized social feed.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Features
 
-## React Compiler
+### 🔐 Authentication & Security
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* User Registration
+* User Login
+* JWT Authentication
+* Protected Routes
+* Forgot Password Functionality
+* Password Hashing using bcrypt
 
-## Expanding the ESLint configuration
+### 👤 User Profile Management
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+* Create and Update Profile
+* Add Bio
+* Add Skills
+* Upload Profile Picture
+* View User Information
+
+### 📝 Post Management
+
+* Create Posts
+* Upload Post Images
+* Store Posts in MongoDB
+* Display Posts in Feed
+* Real-Time Feed Updates
+
+###  Social Features
+
+* Like / Unlike Posts
+* Comment on Posts
+* Display Comments with User Information
+* Personalized Feed System
+
+### ☁️ Cloudinary Integration
+
+* Profile Image Upload
+* Post Image Upload
+* Cloud Storage for Media
+* Automatic Image URL Generation
+
+### 🎨 Frontend UI
+
+* Built with React.js
+* Responsive Layout
+* Tailwind CSS Styling
+* Clean Social Media Feed Design
+* Reusable Components
+
+### ⚡ Backend Features
+
+* RESTful APIs using Express.js
+* MongoDB Database Integration
+* Mongoose ODM
+* Middleware-based Authentication
+* Error Handling
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+
+* React.js
+* React Router DOM
+* Axios
+* Tailwind CSS
+
+### Backend
+
+* Node.js
+* Express.js
+* JWT Authentication
+* bcrypt.js
+* Multer
+
+### Database
+
+* MongoDB Atlas
+* Mongoose
+
+### Cloud Services
+
+* Cloudinary
+
+---
+
+## 📂 Project Structure
+
+frontend/
+├── src/
+│ ├── components/
+│ ├── pages/
+│ ├── services/
+│ └── App.jsx
+
+backend/
+├── controllers/
+├── models/
+├── routes/
+├── middleware/
+├── config/
+└── server.js
+
+---
+
+## 📌 Learning Outcomes
+
+This project demonstrates:
+
+* Full-Stack MERN Development
+* Authentication & Authorization
+* MongoDB Relationships
+* REST API Development
+* File Upload Handling
+* Cloudinary Integration
+* React State Management
+* Frontend-Backend Communication
+* Social Media Application Architecture
+
+---
+
+## 🔮 Future Enhancements
+
+* Follow / Unfollow Users
+* User Search
+* Real-Time Notifications
+* Dark Mode
+* Chat System
+* Post Sharing
+* Deployment on Vercel & Render
+* Real-Time Updates using Socket.io
+
+---
+
+## 👩‍💻 Author
+
+Chinmayee Reddy
+
+GitHub: https://github.com/Chinmayee04-sys
