@@ -1,5 +1,5 @@
 const roadmaps = require("../data/roadmaps");
-const User = require("../models/User");
+const User = require("../models/user");
 
 const getRoles = (req, res) => {
   res.json(Object.keys(roadmaps));
