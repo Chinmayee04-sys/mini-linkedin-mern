@@ -7,6 +7,9 @@ import ResetPassword from "./pages/ResetPassword";
 import Profile from "./pages/Profile";
 import CreatePost from "./pages/CreatePost";
 import Feed from "./pages/Feed";
+import RoadmapGenerator from "./pages/RoadmapGenerator";
+import ResumeMatch from "./pages/ResumeMatch";
+import ProjectVerification from "./pages/ProjectVerification";
 
 function App() {
   return (
@@ -22,6 +25,9 @@ function App() {
         <Route path="/profile/:id" element={<Profile />} />
         <Route path="/create-post" element={<CreatePost />} />
         <Route path="/feed" element={<Feed />} />
+        <Route path="/roadmap" element={<RoadmapGenerator />} />
+        <Route path="/resume-match" element={<ResumeMatch />} />
+        <Route path="/verify-project" element={<ProjectVerification />} />
       </Routes>
     </BrowserRouter>
   );

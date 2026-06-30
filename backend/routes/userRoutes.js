@@ -1,8 +1,9 @@
 const express=require("express")
 const protect=require("../middleware/authMiddleware")
 const router=express.Router()
-const {getUsers,registerUser,loginUser,getProfile,updateProfile,followUser,searchUsers,forgotPassword,resetPassword,getUserById}=require("../controllers/userController")
+const {getUsers,registerUser,loginUser,getProfile,updateProfile,followUser,searchUsers,forgotPassword,resetPassword,getUserById,suggestedUsers}=require("../controllers/userController")
 router.get("/",getUsers)
+router.get("/suggested",protect,suggestedUsers)
 router.get("/search",protect,searchUsers)
 router.post("/register",registerUser)
 router.post("/login",loginUser);

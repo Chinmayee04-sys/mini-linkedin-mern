@@ -1,7 +1,6 @@
 const User=require("../models/User");
 const bcryptjs=require("bcryptjs");
 const generateToken=require("../utils/generateToken");
-const nodemailer=require("nodemailer");
 const searchUsers=async(req,res)=>{
   try{
     const { q } = req.query;
@@ -132,9 +131,11 @@ const updateProfile=async(req,res)=>{
         message:"user not found"
       })
     }
-    user.bio=req.body.bio || user.bio
+    user.bio=req.body.bio !== undefined ? req.body.bio : user.bio
     user.skills=req.body.skills || user.skills
     user.profilePic=req.body.profilePic || user.profilePic
+    if(req.body.experience !== undefined) user.experience = req.body.experience
+    if(req.body.education !== undefined) user.education = req.body.education
     const updatedUser = await user.save()
     res.json(updatedUser)
     
@@ -145,6 +146,19 @@ const updateProfile=async(req,res)=>{
     })
   }
 }
+
+const suggestedUsers=async(req,res)=>{
+  try{
+    const currentUser=await User.findById(req.user._id);
+    const users=await User.find({
+      _id:{$ne:req.user._id,$nin:currentUser.following}
+    }).select("name profilePic skills").limit(5);
+    res.json(users);
+  } catch(err){
+    res.status(500).json({message:err.message});
+  }
+}
+
 const followUser=async(req,res)=>{
   try{
     const userToFollow=await User.findById(req.params.id);
@@ -272,5 +286,5 @@ const resetPassword=async(req,res)=>{
 module.exports={
     getUsers,
     registerUser,loginUser,getProfile,updateProfile,followUser,searchUsers,getUserById,
-    forgotPassword,resetPassword
+    forgotPassword,resetPassword,suggestedUsers
 }

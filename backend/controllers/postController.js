@@ -168,8 +168,43 @@ const updatePost = async (req, res) => {
   }
 };
 
+const deletePost = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+    if (post.user.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: "Not authorized to delete this post" });
+    }
+    await Post.findByIdAndDelete(req.params.id);
+    res.json({ message: "Post deleted" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const getPostActivity = async (req, res) => {
+  try {
+    const yearAgo = new Date();
+    yearAgo.setFullYear(yearAgo.getFullYear() - 1);
+    const posts = await Post.find({
+      user: req.params.userId,
+      createdAt: { $gte: yearAgo }
+    }).select("createdAt");
+    const counts = {};
+    posts.forEach(p => {
+      const key = new Date(p.createdAt).toISOString().slice(0, 10);
+      counts[key] = (counts[key] || 0) + 1;
+    });
+    res.json(counts);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 module.exports = {
   createPost,
   getPosts,
-  likePost,commentPost,getFeedPosts,getUserPosts,updatePost
+  likePost,commentPost,getFeedPosts,getUserPosts,updatePost,deletePost,getPostActivity
 };

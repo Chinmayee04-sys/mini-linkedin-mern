@@ -8,7 +8,9 @@ function Navbar() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showTools, setShowTools] = useState(false);
   const dropdownRef = useRef(null);
+  const toolsRef = useRef(null);
 
   useEffect(() => {
     if (!query.trim() || !token) {
@@ -33,6 +35,9 @@ function Navbar() {
     const handleClick = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setShowDropdown(false);
+      }
+      if (toolsRef.current && !toolsRef.current.contains(e.target)) {
+        setShowTools(false);
       }
     };
     document.addEventListener("mousedown", handleClick);
@@ -60,10 +65,10 @@ function Navbar() {
   };
 
   return (
-    <nav className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+    <nav className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50 backdrop-blur-sm bg-white/95">
       <div className="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between gap-4">
-        <Link to="/feed" className="text-[#0a66c2] font-bold text-xl tracking-tight shrink-0">
-          MiniLink
+        <Link to="/feed" className="text-[#0a66c2] font-bold text-xl tracking-tight shrink-0 hover:opacity-80 transition-opacity">
+          Mini LinkedIn
         </Link>
 
         {token && (
@@ -74,10 +79,10 @@ function Navbar() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onFocus={() => results.length > 0 && setShowDropdown(true)}
-              className="w-full px-3 py-1.5 bg-gray-100 border border-gray-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-[#0a66c2] focus:bg-white focus:border-transparent"
+              className="w-full px-3 py-1.5 bg-gray-100 border border-gray-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-[#0a66c2] focus:bg-white focus:border-transparent transition-all duration-200"
             />
             {showDropdown && (
-              <div className="absolute top-full mt-1 left-0 right-0 bg-white rounded-lg shadow-lg border border-gray-200 max-h-72 overflow-y-auto">
+              <div className="absolute top-full mt-1 left-0 right-0 bg-white rounded-xl shadow-lg border border-gray-200 max-h-72 overflow-y-auto backdrop-blur-sm">
                 {results.length === 0 ? (
                   <p className="text-sm text-gray-400 p-3 text-center">No users found</p>
                 ) : (
@@ -85,12 +90,12 @@ function Navbar() {
                     <div
                       key={user._id}
                       onClick={() => { navigate(`/profile/${user._id}`); setShowDropdown(false); setQuery(""); }}
-                      className="flex items-center gap-3 p-3 hover:bg-gray-50 border-b border-gray-100 last:border-0 cursor-pointer"
+                      className="flex items-center gap-3 p-3 hover:bg-gray-50 border-b border-gray-100 last:border-0 cursor-pointer transition-colors"
                     >
                       {user.profilePic ? (
-                        <img src={user.profilePic} alt="" className="w-9 h-9 rounded-full object-cover border border-gray-200" />
+                        <img src={user.profilePic} alt="" className="w-9 h-9 rounded-full object-cover border border-gray-200 shadow-sm" />
                       ) : (
-                        <div className="w-9 h-9 rounded-full bg-[#0a66c2] flex items-center justify-center text-white font-semibold text-sm">
+                        <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#0a66c2] to-[#004182] flex items-center justify-center text-white font-semibold text-sm shadow-sm">
                           {user.name?.charAt(0).toUpperCase()}
                         </div>
                       )}
@@ -100,7 +105,7 @@ function Navbar() {
                       </div>
                       <button
                         onClick={(e) => { e.stopPropagation(); handleFollow(user._id); }}
-                        className="text-xs font-medium px-3 py-1 rounded-full border border-[#0a66c2] text-[#0a66c2] hover:bg-[#e2f0ff] transition-colors cursor-pointer shrink-0"
+                        className="text-xs font-medium px-3 py-1 rounded-full border border-[#0a66c2] text-[#0a66c2] hover:bg-[#e2f0ff] transition-all duration-200 cursor-pointer shrink-0 active:scale-95"
                       >
                         {user.following ? "Following" : "Follow"}
                       </button>
@@ -112,33 +117,55 @@ function Navbar() {
           </div>
         )}
 
-        <div className="flex items-center gap-3 shrink-0">
-          {token ? (
-            <>
-              <Link to="/feed" className="text-gray-600 hover:text-[#0a66c2] px-2 py-1.5 text-sm font-medium transition-colors">
-                Feed
-              </Link>
-              <Link to="/create-post" className="text-gray-600 hover:text-[#0a66c2] px-2 py-1.5 text-sm font-medium transition-colors">
-                Post
-              </Link>
-              <Link to="/profile" className="text-gray-600 hover:text-[#0a66c2] px-2 py-1.5 text-sm font-medium transition-colors">
-                Profile
-              </Link>
-              <button onClick={handleLogout} className="text-sm text-gray-500 hover:text-red-600 ml-2 cursor-pointer transition-colors">
-                Logout
-              </button>
-            </>
-          ) : (
-            <>
-              <Link to="/login" className="text-[#0a66c2] font-medium text-sm px-4 py-1.5 rounded-full border border-[#0a66c2] hover:bg-[#e2f0ff] transition-colors">
-                Sign in
-              </Link>
-              <Link to="/register" className="text-white font-medium text-sm px-4 py-1.5 rounded-full bg-[#0a66c2] hover:bg-[#004182] transition-colors">
-                Join now
-              </Link>
-            </>
-          )}
-        </div>
+          <div className="flex items-center gap-1 shrink-0">
+            {token ? (
+              <>
+                <Link to="/feed" className="text-gray-600 hover:text-[#0a66c2] px-3 py-1.5 text-sm font-medium transition-colors hover:bg-gray-50 rounded-lg">
+                  Feed
+                </Link>
+                <Link to="/create-post" className="text-gray-600 hover:text-[#0a66c2] px-3 py-1.5 text-sm font-medium transition-colors hover:bg-gray-50 rounded-lg">
+                  Post
+                </Link>
+                <Link to="/profile" className="text-gray-600 hover:text-[#0a66c2] px-3 py-1.5 text-sm font-medium transition-colors hover:bg-gray-50 rounded-lg">
+                  Me
+                </Link>
+                <div ref={toolsRef} className="relative">
+                  <button onClick={() => setShowTools(!showTools)}
+                    className="text-gray-600 hover:text-[#0a66c2] px-3 py-1.5 text-sm font-medium transition-colors hover:bg-gray-50 rounded-lg cursor-pointer flex items-center gap-1">
+                    Tools <span className="text-xs opacity-60">▼</span>
+                  </button>
+                  {showTools && (
+                    <div className="absolute top-full right-0 mt-1 bg-white rounded-xl shadow-lg border border-gray-200 w-52 overflow-hidden backdrop-blur-sm">
+                      <Link to="/roadmap" onClick={() => setShowTools(false)}
+                        className="flex items-center gap-2 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 border-b border-gray-100 transition-colors">
+                        <span>🗺️</span> Skill Roadmap
+                      </Link>
+                      <Link to="/resume-match" onClick={() => setShowTools(false)}
+                        className="flex items-center gap-2 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 border-b border-gray-100 transition-colors">
+                        <span>📊</span> Resume Match
+                      </Link>
+                      <Link to="/verify-project" onClick={() => setShowTools(false)}
+                        className="flex items-center gap-2 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                        <span>✅</span> Verify Project
+                      </Link>
+                    </div>
+                  )}
+                </div>
+                <button onClick={handleLogout} className="text-sm text-gray-500 hover:text-red-600 ml-1 px-3 py-1.5 hover:bg-red-50 rounded-lg transition-colors cursor-pointer">
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link to="/login" className="text-[#0a66c2] font-medium text-sm px-4 py-1.5 rounded-full border border-[#0a66c2] hover:bg-[#e2f0ff] transition-all duration-200 hover:shadow-sm">
+                  Sign in
+                </Link>
+                <Link to="/register" className="text-white font-medium text-sm px-4 py-1.5 rounded-full bg-[#0a66c2] hover:bg-[#004182] transition-all duration-200 hover:shadow-md">
+                  Join now
+                </Link>
+              </>
+            )}
+          </div>
       </div>
     </nav>
   );

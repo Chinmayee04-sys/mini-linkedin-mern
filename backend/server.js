@@ -29,6 +29,9 @@ app.use(
   "/api/upload",
   require("./routes/uploadRoutes")
 );
+app.use("/api/roadmap",require("./routes/roadmapRoutes"))
+app.use("/api/match",require("./routes/matchRoutes"))
+app.use("/api/projects",require("./routes/projectRoutes"))
 //starting the server on the specified PORT environment variable or defaulting to 5000 if not set
 const PORT=process.env.PORT || 5000
 app.listen(PORT,()=>{

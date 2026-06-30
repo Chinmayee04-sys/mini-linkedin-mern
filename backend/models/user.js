@@ -39,7 +39,21 @@ const userSchema=new mongoose.Schema({
         }
     ],
     resetPasswordToken:{type:String},
-    resetPasswordExpires:{type:Date}
+    resetPasswordExpires:{type:Date},
+    experience:[{
+      company:{type:String,required:true},
+      role:{type:String,required:true},
+      startDate:{type:String},
+      endDate:{type:String},
+      description:{type:String}
+    }],
+    education:[{
+      school:{type:String,required:true},
+      degree:{type:String},
+      field:{type:String},
+      startDate:{type:String},
+      endDate:{type:String}
+    }]
 },
     {
         timestamps:true
